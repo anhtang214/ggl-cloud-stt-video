@@ -1,0 +1,18 @@
+# Java / Eclipse
+bin/
+target/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.json
+*.env
+key*.json
+
+# Logs
+*.log
