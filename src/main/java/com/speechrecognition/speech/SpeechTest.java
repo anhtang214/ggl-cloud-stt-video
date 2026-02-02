@@ -1,4 +1,4 @@
-package com.speechrecognition.app.speech;
+package com.speechrecognition.speech;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;

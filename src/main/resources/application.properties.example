@@ -1,0 +1,37 @@
+# DATABASE CONFIGURATION
+
+# MySQL Connection
+spring.datasource.url=YOUR_URL
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# SERVER CONFIGURATION
+server.port=8080
+
+# GOOGLE OAUTH2 CONFIGURATION
+spring.security.oauth2.client.registration.google.client-id=YOUR_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_SECRET
+spring.security.oauth2.client.registration.google.scope=profile,email
+spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/google
+
+# FILE UPLOAD CONFIGURATION
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=500MB
+spring.servlet.multipart.max-request-size=500MB
+
+# GCP CONFIGURATION
+gcp.project-id=YOUR_ID
+gcp.credentials.location=YOUR_FILE_LOCATION
+gcp.bucket-name=YOUR_BUCKET_NAME
+
+# LOGGING
+logging.level.root=INFO
+logging.level.com.yourcompany.app=DEBUG
+logging.level.org.hibernate.SQL=DEBUG

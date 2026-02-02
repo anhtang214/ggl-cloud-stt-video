@@ -16,3 +16,7 @@ key*.json
 
 # Logs
 *.log
+
+# Ignore local application properties
+src/main/resources/application.properties
+
