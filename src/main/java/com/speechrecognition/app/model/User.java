@@ -29,7 +29,6 @@ public class User {
     private String profilePictureUrl;
     
     @Column(name = "auth_provider")
-    @Enumerated(EnumType.STRING)
     private AuthProvider authProvider; // GOOGLE, LOCAL,...
     
     @Column(name = "created_at")

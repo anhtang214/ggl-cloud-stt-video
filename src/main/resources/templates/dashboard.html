@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Video Transcription App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h2>Video Transcription App</h2>
+            <div class="user-info">
+                <span sec:authentication="name">User</span>
+                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+        </nav>
+        
+        <main class="dashboard">
+            <h1>Welcome to Your Dashboard!</h1>
+            <p>Logged in as: <strong sec:authentication="name">user@example.com</strong></p>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>📁 My Projects</h3>
+                    <p>Create and manage your transcription projects</p>
+                    <button class="btn-primary">View Projects</button>
+                </div>
+                
+                <div class="card">
+                    <h3>⬆️ Upload Video</h3>
+                    <p>Start a new transcription project</p>
+                    <button class="btn-primary">Upload</button>
+                </div>
+                
+                <div class="card">
+                    <h3>📊 Usage</h3>
+                    <p>View your subscription and usage stats</p>
+                    <button class="btn-primary">View Stats</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
