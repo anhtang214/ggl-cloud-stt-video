@@ -6,7 +6,6 @@ import com.speechrecognition.app.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Spring Data JPA will automatically implement these methods
     User findByEmail(String email);
     boolean existsByEmail(String email);
 }

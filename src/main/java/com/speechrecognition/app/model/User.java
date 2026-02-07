@@ -3,7 +3,7 @@ package com.speechrecognition.app.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import com.google.api.AuthProvider;
+import com.speechrecognition.app.model.AuthProvider;
 
 @Entity
 @Table(name = "users")
@@ -16,9 +16,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     
-    @Column
-    private String password; // Nullable for OAuth users
-    
     @Column(name = "google_id")
     private String googleId; // Store Google OAuth ID
     
@@ -28,6 +25,7 @@ public class User {
     @Column(name = "profile_picture_url")
     private String profilePictureUrl;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
     private AuthProvider authProvider; // GOOGLE, LOCAL,...
     
@@ -45,9 +43,6 @@ public class User {
     
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
     
     public String getGoogleId() { return googleId; }
     public void setGoogleId(String googleId) { this.googleId = googleId; }
