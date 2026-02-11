@@ -1,46 +1,301 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Video Transcription App</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
 </head>
-<body>
-    <div class="container">
-        <nav class="navbar">
-            <h2>Video Transcription App</h2>
-            <div class="user-info">
-                <span sec:authentication="name">User</span>
-                <a href="/logout" class="btn-logout">Logout</a>
+<body class="bg-light">
+    <div class="page-wrapper">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="hamburger-btn">
+            <i class="bi bi-list"></i>
+          </button>
+          <a href="#" class="navbar-logo">
+            <div class="logo-icon">
+              <i class="bi bi-soundwave"></i>
             </div>
-        </nav>
-        
-        <main class="dashboard">
-            <h1>Welcome to Your Dashboard!</h1>
-            <p>Logged in as: <strong sec:authentication="name">user@example.com</strong></p>
-            
-            <div class="dashboard-grid">
-                <div class="card">
-                    <h3>📁 My Projects</h3>
-                    <p>Create and manage your transcription projects</p>
-                    <button class="btn-primary">View Projects</button>
+            <span class="logo-text">HATA Notaking AI</span>
+          </a>
+          <div class="navbar-welcome">
+            <h2>Welcome Rosie!</h2>
+            <p>Hope you are healthy and happy today...</p>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" class="search-input" placeholder="Search..." />
+          </div>
+          <button class="trial-btn">Start Your 3-day Free Trial</button>
+          <button class="icon-btn">
+            <i class="bi bi-bell"></i>
+          </button>
+          <div class="profile-wrap">
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="Profile"
+              class="profile-img"
+            />
+            <i
+              class="bi bi-chevron-down text-muted"
+              style="font-size: 0.75rem"
+            ></i>
+          </div>
+        </div>
+      </header>
+      <div class="body-layout">
+        <aside class="sidebar">
+          <a href="#" class="nav-item active">
+            <i class="bi bi-house-fill"></i>
+            <span>Home</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bi bi-grid"></i>
+            <span>All records</span>
+          </a>
+          <hr class="nav-divider" />
+          <a href="#" class="nav-item">
+            <i class="bi bi-folder2"></i>
+            <span>BE09</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bi bi-folder2"></i>
+            <span>Uni CS30001</span>
+          </a>
+          <div class="sidebar-bottom">
+            <a href="#" class="nav-item">
+              <i class="bi bi-gear"></i>
+              <span>Settings</span>
+            </a>
+          </div>
+        </aside>
+        <main class="main-content">
+          <div class="row g-4">
+            <div class="col-lg-8 d-flex flex-column gap-4">
+              <button
+                class="btn upload-btn w-100 d-flex align-items-center justify-content-center gap-3"
+              >
+                <div class="upload-btn-icon">
+                  <i class="bi bi-file-earmark-arrow-up"></i>
                 </div>
-                
-                <div class="card">
-                    <h3>⬆️ Upload Video</h3>
-                    <p>Start a new transcription project</p>
-                    <button class="btn-primary">Upload</button>
+                <span>Upload &amp; Transcribe</span>
+              </button>
+              <div class="card records-card border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <h2 class="records-title mb-4">All Records</h2>
+                  <table class="table table-hover records-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Folder</th>
+                        <th>Last change</th>
+                        <th>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>BE09 SQL HW</td>
+                        <td>2/2/2026</td>
+                        <td>BE09</td>
+                        <td>4/2/2026</td>
+                        <td>50 mins</td>
+                      </tr>
+                      <tr>
+                        <td>BE09 OOP Intro</td>
+                        <td>10/10/2025</td>
+                        <td>BE09</td>
+                        <td>11/11/2025</td>
+                        <td>3 hours</td>
+                      </tr>
+                      <tr>
+                        <td>CS3001 Lecture 1</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                      </tr>
+                      <tr>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                      </tr>
+                      <tr>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div
+                    class="d-flex align-items-center justify-content-end gap-4 pt-3 border-top"
+                  >
+                    <div
+                      class="d-flex align-items-center gap-2 text-muted small"
+                    >
+                      Rows per page:
+                      <div class="rows-select-wrapper">
+                        <select class="rows-select">
+                          <option>5</option>
+                          <option>10</option>
+                          <option>25</option>
+                        </select>
+                        <i class="bi bi-chevron-down"></i>
+                      </div>
+                    </div>
+                    <span class="text-muted small">1–5 of 13</span>
+                    <div class="d-flex gap-1">
+                      <button class="page-btn" disabled>
+                        <i class="bi bi-chevron-left"></i>
+                      </button>
+                      <button class="page-btn">
+                        <i class="bi bi-chevron-right"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                
-                <div class="card">
-                    <h3>📊 Usage</h3>
-                    <p>View your subscription and usage stats</p>
-                    <button class="btn-primary">View Stats</button>
-                </div>
+              </div>
             </div>
+
+            <div class="col-lg-4 d-flex flex-column gap-4">
+              <div
+                class="discount-card d-flex align-items-center justify-content-between gap-3"
+              >
+                <div>
+                  <p class="mb-1" style="font-size: 1rem">
+                    <span class="discount-pct">50%</span>
+                    <strong>Discount</strong>
+                  </p>
+                  <p class="discount-sub mb-0">
+                    Get a discount on certain days and don't miss it.
+                  </p>
+                </div>
+                <button class="discount-btn flex-shrink-0">
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+                <div class="deco-circle deco-1"></div>
+                <div class="deco-circle deco-2"></div>
+                <div class="deco-circle deco-3"></div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-4"
+                  >
+                    <h3 class="stats-title mb-0">Statistics</h3>
+                    <div class="d-flex gap-2">
+                      <select class="form-select form-select-sm stats-select">
+                        <option>All records</option>
+                      </select>
+                      <select class="form-select form-select-sm stats-select">
+                        <option>2025</option>
+                        <option>2026</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="chart-container">
+                    <div class="chart-y-labels">
+                      <span>25</span>
+                      <span>20</span>
+                      <span>15</span>
+                      <span>10</span>
+                      <span>5</span>
+                      <span>0</span>
+                    </div>
+                    <div class="chart-bars-wrapper">
+                      <div class="chart-bars">
+                        <div class="bar-col">
+                          <div class="bar" style="height: 46%"></div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar" style="height: 68%"></div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar" style="height: 76%"></div>
+                        </div>
+                        <div class="bar-col active">
+                          <div class="bar-tooltip">20</div>
+                          <div class="bar active" style="height: 80%"></div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar" style="height: 56%"></div>
+                        </div>
+                        <div class="bar-col">
+                          <div class="bar" style="height: 84%"></div>
+                        </div>
+                      </div>
+                      <div class="chart-x-labels">
+                        <span>Jan</span>
+                        <span>Feb</span>
+                        <span>Mar</span>
+                        <span class="active-label">Apr</span>
+                        <span>May</span>
+                        <span>Jun</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4">
+                  <h3 class="stats-title mb-3">Quick share</h3>
+                  <div class="d-flex align-items-center gap-2 mb-4">
+                    <img
+                      src="https://randomuser.me/api/portraits/women/44.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="User"
+                    />
+                    <img
+                      src="https://randomuser.me/api/portraits/men/32.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="User"
+                    />
+                    <img
+                      src="https://randomuser.me/api/portraits/men/45.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="User"
+                    />
+                    <img
+                      src="https://randomuser.me/api/portraits/men/67.jpg"
+                      class="avatar-img rounded-circle"
+                      alt="User"
+                    />
+                    <button class="avatar-add">
+                      <i class="bi bi-plus"></i>
+                    </button>
+                  </div>
+                  <div class="mb-3">
+                    <label class="share-label mb-1 d-block">File</label>
+                    <select class="form-select share-select">
+                      <option>Choose file...</option>
+                      <option>BE09 SQL HW</option>
+                      <option>BE09 OOP Intro</option>
+                      <option>CS3001 Lecture 1</option>
+                    </select>
+                  </div>
+                  <button
+                    class="btn transfer-btn w-100 d-flex align-items-center justify-content-center gap-2"
+                  >
+                    Transfer <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
+      </div>
     </div>
-</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

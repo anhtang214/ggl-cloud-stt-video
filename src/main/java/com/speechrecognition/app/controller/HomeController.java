@@ -17,6 +17,6 @@ public class HomeController {
 	
 	@GetMapping("/dashboard")
 	public String dashboard() {
-		return "dashboard";
+		return "dashboard-collab";
 	}	
 }
