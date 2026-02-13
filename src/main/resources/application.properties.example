@@ -31,7 +31,12 @@ gcp.project-id=YOUR_ID
 gcp.credentials.location=YOUR_FILE_LOCATION
 gcp.bucket-name=YOUR_BUCKET_NAME
 
+# STATIC RESOURCE CONFIGURATION
+spring.web.resources.static-locations=classpath:/static/
+spring.web.resources.add-mappings=true
+spring.thymeleaf.cache=false
+
 # LOGGING
 logging.level.root=INFO
-logging.level.com.yourcompany.app=DEBUG
+logging.level.com.speechrecognition.app=DEBUG
 logging.level.org.hibernate.SQL=DEBUG
