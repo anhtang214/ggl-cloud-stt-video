@@ -123,20 +123,22 @@
     margin-bottom: 20px;
 }
 
-.select-file-btn {
-    display: flex;
+input[type="file"] {
+    display: inline-flex;
+    align-items: center;
+}
+
+input[type="file"]::file-selector-button {
     height: 36px;
     padding: 0 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
     border-radius: 10px;
     border: 1px solid #D5D3E0;
     background: #FFF;
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.02);
+    margin: 0px 24px;
 }
 
-.select-file-btn:hover {
+input[type="file"]::file-selector-button:hover {
     border-color: #B9B6C9;
     background: #F8F7FF;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
