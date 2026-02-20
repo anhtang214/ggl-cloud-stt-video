@@ -10,7 +10,6 @@ import com.google.cloud.vertexai.api.GenerateContentResponse;
 import com.google.cloud.vertexai.generativeai.GenerativeModel;
 import com.google.cloud.vertexai.generativeai.ResponseHandler;
 import com.google.protobuf.ByteString;
-import com.google.api.gax.retrying.RetrySettings;
 import org.threeten.bp.Duration;
 
 import java.io.FileInputStream;
@@ -25,9 +24,6 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import ws.schild.jave.Encoder;
 import ws.schild.jave.MultimediaObject;
