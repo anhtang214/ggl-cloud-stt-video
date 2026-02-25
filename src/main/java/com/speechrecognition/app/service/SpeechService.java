@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.threeten.bp.Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -51,22 +50,35 @@ public class SpeechService {
 
     public TranscriptionResult transcribeAndSummarize(String gcsAudioUri) throws Exception {
         try (SpeechClient speechClient = SpeechClient.create(speechSettings)) {
-            String transcript = processFromCloudStorage(speechClient, gcsAudioUri);
-            String summary = "";
-            if (transcript != null && !transcript.isEmpty()) {
-                summary = summarizeWithGemini(transcript, credentials);
+            List<SpeechRecognitionResult> results = processFromCloudStorage(speechClient, gcsAudioUri);
+            StringBuilder fullTranscript = new StringBuilder();
+
+            if (results.isEmpty()) {
+                System.out.println("No speech detected in the audio file.");
+            } else {
+                for (SpeechRecognitionResult result : results) {
+                    if (result.getAlternativesCount() > 0) {
+                        String text = result.getAlternativesList().get(0).getTranscript();
+                        fullTranscript.append(text).append(" ");
+                    }
+                }
             }
-            return new TranscriptionResult(transcript, summary);
+            String summary = "";
+            if (fullTranscript != null && !fullTranscript.isEmpty()) {
+                summary = summarizeWithGemini(fullTranscript, credentials);
+            }
+            return new TranscriptionResult(results, summary);
         }
     }
 
-    private static String processFromCloudStorage(SpeechClient speechClient, String gcsUri) throws Exception {
+    private static List<SpeechRecognitionResult> processFromCloudStorage(SpeechClient speechClient, String gcsUri) throws Exception {
         RecognitionConfig config = RecognitionConfig.newBuilder()
                 .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
                 .setAudioChannelCount(2)
                 .setLanguageCode("vi-VN")
                 .addAlternativeLanguageCodes("en-US")
                 .setEnableAutomaticPunctuation(true)
+                .setEnableWordTimeOffsets(true)
                 .build();
 
         RecognitionAudio audio = RecognitionAudio.newBuilder()
@@ -78,28 +90,10 @@ public class SpeechService {
 
         LongRunningRecognizeResponse response = operation.get(2, TimeUnit.HOURS);
 
-        StringBuilder fullTranscript = new StringBuilder();
-        collectFullTranscript(response.getResultsList(), fullTranscript);
-
-        return fullTranscript.toString().trim();
+        return response.getResultsList();
     }
 
-    // Can also save each segment into a transcription_segments table here in the future
-    private static void collectFullTranscript(List<SpeechRecognitionResult> results,
-                                              StringBuilder fullTranscript) {
-        if (results.isEmpty()) {
-            System.out.println("No speech detected in the audio file.");
-        } else {
-            for (SpeechRecognitionResult result : results) {
-                if (result.getAlternativesCount() > 0) {
-                    String text = result.getAlternativesList().get(0).getTranscript();
-                    fullTranscript.append(text).append(" ");
-                }
-            }
-        }
-    }
-
-    private String summarizeWithGemini(String transcript, GoogleCredentials credentials) {
+    private String summarizeWithGemini(StringBuilder transcript, GoogleCredentials credentials) {
         try {
             try (VertexAI vertexAI = new VertexAI.Builder()
                     .setProjectId(projectId)
@@ -122,11 +116,11 @@ public class SpeechService {
     }
 
     public static class TranscriptionResult {
-        public final String transcript;
         public final String summary;
+        public final List<SpeechRecognitionResult> transcriptions;
 
-        public TranscriptionResult(String transcript, String summary) {
-            this.transcript = transcript;
+        public TranscriptionResult(List<SpeechRecognitionResult> transcriptions, String summary) {
+            this.transcriptions = transcriptions;
             this.summary = summary;
         }
     }
