@@ -6,10 +6,10 @@
         <title>Dashboard - Video Transcription App</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-<!--        <link rel="stylesheet" th:href="@{/css/dashboard.css}" />-->
-<!--        <link rel="stylesheet" th:href="@{/css/video-upload.css}" />-->
-              <link rel="stylesheet" href="../static/css/dashboard.css" />
-        <link rel="stylesheet" href="../static/css/video-upload.css" />
+        <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+        <link rel="stylesheet" th:href="@{/css/video-upload.css}" />
+<!--        <link rel="stylesheet" href="../static/css/dashboard.css" />-->
+<!--        <link rel="stylesheet" href="../static/css/video-upload.css" />-->
     </head>
     <body class="bg-light">
         <div class="page-wrapper">
@@ -84,7 +84,16 @@
                             <div class="card records-card border-0 shadow-sm">
                                 <div class="upload-wrapper">
                                     <h1 class="upload-title">File Upload</h1>
-                                    <form th:action="@{/upload}" method="POST" enctype="multipart/form-data" class="upload-card-body">
+                                    <div th:if="${message}">
+                                        <h2 th:text="${/message}">
+                                    </div>
+                                    <form
+                                            th:action="@{/upload}"
+                                            method="POST"
+                                            enctype="multipart/form-data"
+                                            class="upload-card-body"
+                                            id="uploadForm"
+                                    >
                                         <div class="language-container d-flex">
                                             <div class="language-selector d-flex">
                                                 <div class="language-option flex-fill" onclick="selectLanguage(this)">
@@ -107,7 +116,7 @@
                                                     Choose a file and upload securely to proceed.
                                                 </div>
                                                 <div class="upload-subtext">
-                                                    MP4 format, up to 50MB
+                                                    MP4 format, up to 500MB
                                                 </div>
                                                 <input type="file" name="file" accept="video/mp4">
                                             </div>
@@ -121,14 +130,21 @@
                                             </select>
                                         </div>
                                         <div class="action-btn-container">
-                                            <button class="action-btn cancel-btn">
+                                            <a class="action-btn cancel-btn" href="/dashboard">
                                                 Cancel
-                                            </button>
-                                            <button class="action-btn attach-file-btn">
+                                            </a>
+                                            <button class="action-btn attach-file-btn" type="submit" form="uploadForm">
                                                 Attach File
                                             </button>
                                         </div>
                                     </form>
+                                    <div>
+                                        <ul>
+                                            <li th:each="file : ${files}">
+                                                <a th:href="${file}" th:text="${file}" />
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

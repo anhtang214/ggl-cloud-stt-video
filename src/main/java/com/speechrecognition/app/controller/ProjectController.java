@@ -5,24 +5,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-import com.speechrecognition.app.model.Transcription;
+import com.speechrecognition.app.model.Project;
 import com.speechrecognition.app.model.User;
 import com.speechrecognition.app.repository.UserRepository;
-import com.speechrecognition.app.service.TranscriptionService;
+import com.speechrecognition.app.service.ProjectService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transcriptions")
-public class TranscriptionController {
+@RequestMapping("/api/projects")
+public class ProjectController {
     
     @Autowired
-    private TranscriptionService transcriptionService;
+    private ProjectService projectService;
     
     @Autowired
     private UserRepository userRepository;
     
     @GetMapping
-    public ResponseEntity<List<Transcription>> getUserTranscriptions(
+    public ResponseEntity<List<Project>> getUserTranscriptions(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
         
         String email = oAuth2User.getAttribute("email");
@@ -32,14 +32,14 @@ public class TranscriptionController {
             return ResponseEntity.notFound().build();
         }
         
-        List<Transcription> transcriptions = 
-            transcriptionService.getUserTranscriptions(user.getId());
+        List<Project> transcriptions = 
+            projectService.getUserProjects(user.getId());
         
         return ResponseEntity.ok(transcriptions);
     }
 
     @GetMapping("/completed")
-    public ResponseEntity<List<Transcription>> getCompletedTranscriptions(
+    public ResponseEntity<List<Project>> getCompletedProjects(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
         
         String email = oAuth2User.getAttribute("email");
@@ -49,14 +49,14 @@ public class TranscriptionController {
             return ResponseEntity.notFound().build();
         }
         
-        List<Transcription> transcriptions = 
-            transcriptionService.getCompletedTranscriptions(user.getId());
+        List<Project> projects = 
+            projectService.getCompletedProjects(user.getId());
         
-        return ResponseEntity.ok(transcriptions);
+        return ResponseEntity.ok(projects);
     }
     
     @GetMapping("/count")
-    public ResponseEntity<Long> getTranscriptionCount(
+    public ResponseEntity<Long> getProjectCount(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
         
         String email = oAuth2User.getAttribute("email");
@@ -66,7 +66,7 @@ public class TranscriptionController {
             return ResponseEntity.notFound().build();
         }
         
-        Long count = transcriptionService.getUserTranscriptionCount(user.getId());
+        Long count = projectService.getUserProjectCount(user.getId());
         
         return ResponseEntity.ok(count);
     }

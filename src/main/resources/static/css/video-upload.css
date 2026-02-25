@@ -192,6 +192,7 @@ input[type="file"]::file-selector-button:hover {
     border: 1px solid #D5D3E0;
     background: #FFF;
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.02);
+    text-decoration: none;
 }
 
 .attach-file-btn {

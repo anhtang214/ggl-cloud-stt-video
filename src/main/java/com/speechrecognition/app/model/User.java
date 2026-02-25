@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.speechrecognition.app.model.AuthProvider;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -34,7 +32,7 @@ public class User {
     private LocalDateTime createdAt;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Transcription> transcriptions;
+    private List<Project> transcriptions;
     
     // Constructors
     public User() {
@@ -64,11 +62,11 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     
     // Getter and Setter for transcriptions
-    public List<Transcription> getTranscriptions() { 
+    public List<Project> getTranscriptions() { 
         return transcriptions; 
     }
 
-    public void setTranscriptions(List<Transcription> transcriptions) { 
+    public void setTranscriptions(List<Project> transcriptions) { 
         this.transcriptions = transcriptions; 
     }
 }
