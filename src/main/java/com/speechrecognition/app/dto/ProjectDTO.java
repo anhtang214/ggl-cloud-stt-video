@@ -3,7 +3,6 @@ package com.speechrecognition.app.dto;
 import com.speechrecognition.app.model.Project;
 import com.speechrecognition.app.model.ProjectStatus;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ProjectDTO {

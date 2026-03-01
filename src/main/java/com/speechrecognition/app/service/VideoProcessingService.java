@@ -18,11 +18,9 @@ public class VideoProcessingService {
     @Autowired
     private CloudStorageService cloudStorageService;
 
-    public VideoResult processVideo(MultipartFile videoFile, String title) throws Exception {
-        String userID = "1";    // placeholder
-        String projectID = "1"; // placeholder
+    public VideoResult processVideo(MultipartFile videoFile, String title, String userId, String projectId) throws Exception {
         // Upload video to GCS immediately
-        String videoUri = cloudStorageService.uploadVideoFile(videoFile, userID, projectID);
+        String videoUri = cloudStorageService.uploadVideoFile(videoFile, userId, projectId);
 
         File tempAudio = null;
         File tempVideo = File.createTempFile("video-", ".mp4");
@@ -30,7 +28,7 @@ public class VideoProcessingService {
         try {
             videoFile.transferTo(tempVideo);
             tempAudio = extractWavAudio(tempVideo);
-            String audioUri = cloudStorageService.uploadAudioFile(tempAudio, userID, projectID);
+            String audioUri = cloudStorageService.uploadAudioFile(tempAudio, userId, projectId);
             return new VideoResult(videoUri, audioUri, title);
         } finally {
             tempVideo.delete();
