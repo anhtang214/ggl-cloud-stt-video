@@ -29,6 +29,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		
 		return oAuth2User;
 	}
+
+	public User getByOAuth2User(OAuth2User oAuth2User) {
+		String email = oAuth2User.getAttribute("email");
+        return userRepository.findByEmail(email);
+	}
 	
 	/**
 	 * Creates or updates a user profile based on OAuth2 authentication data.

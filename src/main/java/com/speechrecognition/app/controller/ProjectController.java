@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import com.speechrecognition.app.dto.ProjectDTO;
 import com.speechrecognition.app.model.User;
-import com.speechrecognition.app.repository.UserRepository;
+import com.speechrecognition.app.service.CustomOAuth2UserService;
 import com.speechrecognition.app.service.ProjectService;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -20,15 +20,13 @@ public class ProjectController {
     private ProjectService projectService;
     
     @Autowired
-    private UserRepository userRepository;
+    private CustomOAuth2UserService userService;
     
     @GetMapping
     public ResponseEntity<List<ProjectDTO>> getUserProjects(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
-        
-        String email = oAuth2User.getAttribute("email");
-        User user = userRepository.findByEmail(email);
-        
+
+        User user = userService.getByOAuth2User(oAuth2User);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
@@ -44,10 +42,8 @@ public class ProjectController {
     @GetMapping("/completed")
     public ResponseEntity<List<ProjectDTO>> getCompletedProjects(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
-        
-        String email = oAuth2User.getAttribute("email");
-        User user = userRepository.findByEmail(email);
-        
+
+        User user = userService.getByOAuth2User(oAuth2User);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
@@ -64,9 +60,7 @@ public class ProjectController {
     public ResponseEntity<Long> getProjectCount(
             @AuthenticationPrincipal OAuth2User oAuth2User) {
         
-        String email = oAuth2User.getAttribute("email");
-        User user = userRepository.findByEmail(email);
-        
+        User user = userService.getByOAuth2User(oAuth2User);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }

@@ -32,7 +32,7 @@ public class User {
     private LocalDateTime createdAt;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Project> transcriptions;
+    private List<Project> projects;
     
     // Constructors
     public User() {
@@ -62,11 +62,11 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     
     // Getter and Setter for transcriptions
-    public List<Project> getTranscriptions() { 
-        return transcriptions; 
+    public List<Project> getProjects() { 
+        return projects; 
     }
 
-    public void setTranscriptions(List<Project> transcriptions) { 
-        this.transcriptions = transcriptions; 
+    public void setProjects(List<Project> projects) { 
+        this.projects = projects; 
     }
 }
