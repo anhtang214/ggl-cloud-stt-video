@@ -68,6 +68,16 @@ document.addEventListener("DOMContentLoaded", function() {
         }).join("");
 
         updatePagination(allProjects.length);
+
+        // Make rows clickable → navigate to project
+        var rows = tableBody.querySelectorAll("tr[data-project-id]");
+        rows.forEach(function(row) {
+            row.style.cursor = "pointer";
+            row.addEventListener("click", function() {
+                var id = row.getAttribute("data-project-id");
+                window.location.href = "/project/" + id;
+            });
+        });
     }
 
     // Pagination controls
@@ -84,15 +94,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (nextBtn) nextBtn.disabled = (currentPage >= totalPages);
     }
 
-    // Make rows clickable → navigate to project
-    var rows = tableBody.querySelectorAll("tr[data-project-id]");
-    rows.forEach(function(row) {
-        row.style.cursor = "pointer";
-        row.addEventListener("click", function() {
-            var id = row.getAttribute("data-project-id");
-            window.location.href = "/project/" + id;
-        });
-    });
 
     // Status badge helper
     function statusBadge(status) {

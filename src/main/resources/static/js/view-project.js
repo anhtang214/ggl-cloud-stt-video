@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    // ── Fetch project detail from API ────────────────────────
+    // Fetch project detail from API
     function fetchProjectDetail() {
         fetch("/api/projects/" + projectId)
             .then(function(response) {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     }
 
-    // ── Render project data ──────────────────────────────────
+    // Render project data
     function renderProject(project) {
         // Hide loading, show content
         if (loadingState) loadingState.style.display = "none";
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         renderSegments(project.segments || []);
     }
 
-    // ── Video player ─────────────────────────────────────────
+    // Video player 
     function renderVideo(project) {
         if (!videoWrapper) return;
 
@@ -93,12 +93,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // ── Summary ──────────────────────────────────────────────
+    // Summary
     function renderSummary(project) {
         if (!summaryContent) return;
 
         if (project.summary) {
-            // Split by newlines to preserve paragraph breaks
             var paragraphs = project.summary.split("\n").filter(function(p) {
                 return p.trim() !== "";
             });
@@ -114,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // ── Transcript segments ──────────────────────────────────
+    // Transcript segments
     function renderSegments(segments) {
         if (!segmentsContainer) return;
 
@@ -140,9 +139,55 @@ document.addEventListener("DOMContentLoaded", function() {
                 + '  </div>'
                 + '</div>';
         }).join("");
+
+        // Click segment → seek video to that time
+        var cards = segmentsContainer.querySelectorAll(".segment-card");
+        cards.forEach(function(card) {
+            card.addEventListener("click", function() {
+                var startTime = parseFloat(card.getAttribute("data-start")) || 0;
+                var video = document.querySelector(".video-player");
+                if (video) {
+                    video.currentTime = startTime;
+                    video.play();
+                }
+            });
+        });
+
+        // Auto-highlight segment based on video playback time
+        setupHighlighting();
     }
 
-    // ── Helpers ───────────────────────────────────────────────
+    // Highlight current segment as video plays
+    function setupHighlighting() {
+        setTimeout(function() {
+            var video = document.querySelector(".video-player");
+            if (!video) return;
+
+            var cards = segmentsContainer.querySelectorAll(".segment-card");
+
+            video.addEventListener("timeupdate", function() {
+                var currentTime = video.currentTime;
+
+                cards.forEach(function(card) {
+                    var start = parseFloat(card.getAttribute("data-start")) || 0;
+                    var end   = parseFloat(card.getAttribute("data-end")) || 0;
+
+                    if (currentTime >= start && currentTime < end) {
+                        if (!card.classList.contains("active")) {
+                            // Remove active from all
+                            cards.forEach(function(c) { c.classList.remove("active"); });
+                            // Add active to current
+                            card.classList.add("active");
+                            // Scroll the segment into view
+                            card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        }
+                    }
+                });
+            });
+        }, 500);
+    }
+
+    // Helpers
     function escapeHtml(text) {
         var div = document.createElement("div");
         div.textContent = text;
@@ -163,6 +208,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // ── Initialize ───────────────────────────────────────────
+    // Initialize 
     fetchProjectDetail();
 });
