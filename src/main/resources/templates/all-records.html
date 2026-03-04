@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns:th="https://ww.thymeleaf.org">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>All Records - Video Transcription App</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+      <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+  </head>
+  <body class="bg-light">
+    <div class="page-wrapper">
+      <!-- ═══════════════════ TOP NAVBAR ═══════════════════ -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="hamburger-btn">
+            <i class="bi bi-list"></i>
+          </button>
+          <a href="#" class="navbar-logo">
+            <div class="logo-icon">
+              <i class="bi bi-soundwave"></i>
+            </div>
+            <span class="logo-text">HATA Notaking AI</span>
+          </a>
+          <div class="navbar-welcome">
+            <h2>Welcome Rosie!</h2>
+            <p>Hope you are healthy and happy today...</p>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" class="search-input" placeholder="Search..." />
+          </div>
+          <button class="trial-btn">Start Your 3-day Free Trial</button>
+          <button class="icon-btn">
+            <i class="bi bi-bell"></i>
+          </button>
+          <div class="profile-wrap">
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="Profile"
+              class="profile-img"
+            />
+            <i
+              class="bi bi-chevron-down text-muted"
+              style="font-size: 0.75rem"
+            ></i>
+          </div>
+        </div>
+      </header>
+
+      <div class="body-layout">
+        <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+        <aside class="sidebar">
+          <a href="/dashboard" class="nav-item">
+            <i class="bi bi-house-fill"></i>
+            <span>Home</span>
+          </a>
+          <a href="/all-records" class="nav-item active">
+            <i class="bi bi-grid"></i>
+            <span>All records</span>
+          </a>
+          <hr class="nav-divider" />
+          <a href="#" class="nav-item">
+            <i class="bi bi-folder2"></i>
+            <span>BE09</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bi bi-folder2"></i>
+            <span>Uni CS30001</span>
+          </a>
+          <div class="sidebar-bottom">
+            <a href="#" class="nav-item">
+              <i class="bi bi-gear"></i>
+              <span>Settings</span>
+            </a>
+          </div>
+        </aside>
+
+        <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
+        <main class="main-content">
+          <div class="card records-card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h2 class="records-title mb-4">All Records</h2>
+
+              <!-- Empty state -->
+              <div id="empty-state" style="display:none; text-align:center; padding:40px 20px;">
+                <i class="bi bi-inbox" style="font-size:2.5rem; color:#ccc;"></i>
+                <p style="color:#888; margin-top:12px;">No records yet. Upload a video to get started!</p>
+              </div>
+
+              <table class="table table-hover records-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Folder</th>
+                    <th>Last change</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody id="records-table-body">
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:24px; color:#aaa;">
+                      Loading records...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Pagination -->
+              <div class="d-flex align-items-center justify-content-end gap-4 pt-3 border-top">
+                <div class="d-flex align-items-center gap-2 text-muted small">
+                  Rows per page:
+                  <div class="rows-select-wrapper">
+                    <select id="rows-per-page" class="rows-select">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                    </select>
+                    <i class="bi bi-chevron-down"></i>
+                  </div>
+                </div>
+                <span id="page-info" class="text-muted small">0–0 of 0</span>
+                <div class="d-flex gap-1">
+                  <button id="prev-page-btn" class="page-btn" disabled>
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button id="next-page-btn" class="page-btn" disabled>
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
+  </body>
+</html>

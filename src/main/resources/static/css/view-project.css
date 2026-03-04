@@ -1,0 +1,233 @@
+/* ── Breadcrumb ─────────────────────────────── */
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-nav a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb-nav a:hover {
+    color: #3d5bf5;
+}
+
+.breadcrumb-separator {
+    color: #aaa;
+    font-size: 0.75rem;
+}
+
+.breadcrumb-current {
+    color: #3d5bf5;
+    font-weight: 600;
+}
+
+/* ── Video Player ───────────────────────────── */
+.video-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1a1a2e;
+    margin-bottom: 24px;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 24px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.video-overlay-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2px;
+}
+
+.video-overlay-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.video-player {
+    width: 100%;
+    display: block;
+    min-height: 300px;
+    max-height: 500px;
+    background: #000;
+}
+
+.video-placeholder {
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #c3a8f7 0%, #a8c0f7 50%, #c3a8f7 100%);
+    color: rgba(255,255,255,0.6);
+    font-size: 1.1rem;
+}
+
+/* ── Summary Section ────────────────────────── */
+.summary-section {
+    margin-top: 8px;
+}
+
+.summary-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #3d5bf5;
+    margin-bottom: 12px;
+}
+
+.summary-text {
+    font-size: 0.92rem;
+    color: #444;
+    line-height: 1.7;
+}
+
+.summary-placeholder {
+    color: #aaa;
+    font-style: italic;
+    font-size: 0.9rem;
+    padding: 20px 0;
+}
+
+/* ── Transcript Panel ───────────────────────── */
+.transcript-panel {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.transcript-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.transcript-panel::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 4px;
+}
+
+.transcript-panel::-webkit-scrollbar-thumb:hover {
+    background: #bbb;
+}
+
+/* ── Segment Card ───────────────────────────── */
+.segment-card {
+    display: flex;
+    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.segment-card:hover {
+    border-color: #c5d7f7;
+    background: #fafbff;
+}
+
+.segment-card.active {
+    border: 1px solid #3d5bf5;
+    background: #F5F8FE;
+}
+
+/* ── Segment Row (timestamp + text) ─────────── */
+.segment-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    align-self: stretch;
+}
+
+/* ── Timestamp Badge ────────────────────────── */
+.timestamp-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 170%;
+    white-space: nowrap;
+    flex-shrink: 0;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #e0e0e0;
+}
+
+.segment-card.active .timestamp-badge {
+    background: #3d5bf5;
+    color: #fff;
+    border-color: #3d5bf5;
+}
+
+/* ── Segment Text ───────────────────────────── */
+.segment-text {
+    flex: 1 0 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 160%;
+    color: #000;
+}
+
+/* ── Loading & Empty States ─────────────────── */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #aaa;
+    gap: 12px;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e5e5e5;
+    border-top-color: #3d5bf5;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #c62828;
+}
+
+.empty-segments {
+    text-align: center;
+    padding: 40px 20px;
+    color: #aaa;
+}
+
+.empty-segments i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    display: block;
+}
