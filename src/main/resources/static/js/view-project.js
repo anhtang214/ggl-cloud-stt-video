@@ -157,13 +157,26 @@ document.addEventListener("DOMContentLoaded", function() {
         setupHighlighting();
     }
 
-    // Highlight current segment as video plays
+    // Highlight current segment as video plays, pause automatic when scrolling, resume after 5s
     function setupHighlighting() {
         setTimeout(function() {
             var video = document.querySelector(".video-player");
             if (!video) return;
 
             var cards = segmentsContainer.querySelectorAll(".segment-card");
+            var userScrolled = false;
+            var scrollTimeout = null;
+
+            // Detect manual scroll on transcript panel
+            segmentsContainer.addEventListener("scroll", function() {
+                userScrolled = true;
+
+                // Resume auto-scroll after 5 seconds of no scrolling
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    userScrolled = false;
+                }, 5000);
+            });
 
             video.addEventListener("timeupdate", function() {
                 var currentTime = video.currentTime;
@@ -178,8 +191,10 @@ document.addEventListener("DOMContentLoaded", function() {
                             cards.forEach(function(c) { c.classList.remove("active"); });
                             // Add active to current
                             card.classList.add("active");
-                            // Scroll the segment into view
-                            card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                            // Only auto-scroll if user hasn't scrolled manually
+                            if (!userScrolled) {
+                                card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                            }
                         }
                     }
                 });
