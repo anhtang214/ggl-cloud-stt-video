@@ -13,71 +13,11 @@
     </head>
     <body class="bg-light">
         <div class="page-wrapper">
-            <header class="top-navbar">
-                <div class="navbar-left">
-                    <button class="hamburger-btn">
-                        <i class="bi bi-list"></i>
-                    </button>
-                    <a href="#" class="navbar-logo">
-                        <div class="logo-icon">
-                            <i class="bi bi-soundwave"></i>
-                        </div>
-                        <span class="logo-text">HATA Notaking AI</span>
-                    </a>
-                    <div class="navbar-welcome">
-                        <h2>Welcome Rosie!</h2>
-                        <p>Hope you are healthy and happy today...</p>
-                    </div>
-                </div>
+            <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-                <div class="navbar-right">
-                    <div class="search-box">
-                        <i class="bi bi-search"></i>
-                        <input type="text" class="search-input" placeholder="Search..." />
-                    </div>
-                    <button class="trial-btn">Start Your 3-day Free Trial</button>
-                    <button class="icon-btn">
-                        <i class="bi bi-bell"></i>
-                    </button>
-                    <div class="profile-wrap">
-                        <img
-                                src="https://randomuser.me/api/portraits/women/44.jpg"
-                                alt="Profile"
-                                class="profile-img"
-                        />
-                        <i
-                                class="bi bi-chevron-down text-muted"
-                                style="font-size: 0.75rem"
-                        ></i>
-                    </div>
-                </div>
-            </header>
             <div class="body-layout">
-                <aside class="sidebar">
-                    <a href="#" class="nav-item active">
-                        <i class="bi bi-house-fill"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="/all-records" class="nav-item">
-                        <i class="bi bi-grid"></i>
-                        <span>All records</span>
-                    </a>
-                    <hr class="nav-divider" />
-                    <a href="#" class="nav-item">
-                        <i class="bi bi-folder2"></i>
-                        <span>BE09</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="bi bi-folder2"></i>
-                        <span>Uni CS30001</span>
-                    </a>
-                    <div class="sidebar-bottom">
-                        <a href="#" class="nav-item">
-                            <i class="bi bi-gear"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                </aside>
+                <div th:replace="~{fragments/sidebar :: sidebar(null)}"></div>
+
                 <main class="main-content">
                     <div class="row g-4">
                         <div class="col-lg-8 d-flex flex-column gap-4">
@@ -96,7 +36,7 @@
                                     >
                                         <div class="language-container d-flex">
                                             <div class="language-selector d-flex">
-                                                <div class="language-option flex-fill" onclick="selectLanguage(this)">
+                                                <div class="language-option active flex-fill" onclick="selectLanguage(this)">
                                                     Monolingual
                                                 </div>
                                                 <div class="divider"></div>
@@ -123,10 +63,18 @@
                                         </div>
                                         <div class="label-input-wrapper">
                                             <label class="input-label mb-1 d-block">Choose language</label>
-                                            <select class="form-select input-box language-select">
-                                                <option>Choose language...</option>
-                                                <option>English</option>
-                                                <option>Vietnamese</option>
+                                            <select class="form-select input-box language-select" name="language" required>
+                                                <option value="" disabled selected>Choose language...</option>
+                                                <option value="English">English</option>
+                                                <option value="Vietnamese">Vietnamese</option>
+                                            </select>
+                                        </div>
+                                        <div class="label-input-wrapper" id="language2-wrapper" style="display:none;">
+                                            <label class="input-label mb-1 d-block">Choose second language</label>
+                                            <select class="form-select input-box language-select" name="language2" disabled>
+                                                <option value="" disabled selected>Choose language...</option>
+                                                <option value="English">English</option>
+                                                <option value="Vietnamese">Vietnamese</option>
                                             </select>
                                         </div>
                                         <div class="action-btn-container">
@@ -154,5 +102,20 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function selectLanguage(btn) {
+                var options = btn.closest('.language-selector').querySelectorAll('.language-option');
+                options.forEach(function(o) { o.classList.remove('active'); });
+                btn.classList.add('active');
+
+                var isBilingual = btn.textContent.trim() === 'Bilingual';
+                var wrapper2 = document.getElementById('language2-wrapper');
+                var select2  = wrapper2.querySelector('select');
+
+                wrapper2.style.display = isBilingual ? 'block' : 'none';
+                select2.disabled = !isBilingual;
+                if (!isBilingual) select2.value = '';
+            }
+        </script>
     </body>
 </html>

@@ -1,0 +1,29 @@
+<aside class="sidebar" th:fragment="sidebar(activeTab)">
+  <a href="/dashboard" class="nav-item" th:classappend="${activeTab == 'dashboard'} ? 'active'">
+    <i class="bi bi-house-fill"></i>
+    <span>Home</span>
+  </a>
+  <a href="/all-records" class="nav-item" th:classappend="${activeTab == 'all-records'} ? 'active'">
+    <i class="bi bi-grid"></i>
+    <span>All records</span>
+  </a>
+  <hr class="nav-divider" />
+  <a href="#" class="nav-item">
+    <i class="bi bi-plus-circle"></i>
+    <span>Add a folder</span>
+  </a>
+  <a href="#" class="nav-item">
+    <i class="bi bi-folder2"></i>
+    <span>be09</span>
+  </a>
+  <a href="#" class="nav-item">
+    <i class="bi bi-folder2"></i>
+    <span>Anh's first folder</span>
+  </a>
+  <div class="sidebar-bottom">
+    <a href="#" class="nav-item">
+      <i class="bi bi-gear"></i>
+      <span>Settings</span>
+    </a>
+  </div>
+</aside>

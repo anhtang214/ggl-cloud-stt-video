@@ -10,74 +10,10 @@
   </head>
   <body class="bg-light">
     <div class="page-wrapper">
-      <!-- ═══════════════════ TOP NAVBAR ═══════════════════ -->
-      <header class="top-navbar">
-        <div class="navbar-left">
-          <button class="hamburger-btn">
-            <i class="bi bi-list"></i>
-          </button>
-          <a href="#" class="navbar-logo">
-            <div class="logo-icon">
-              <i class="bi bi-soundwave"></i>
-            </div>
-            <span class="logo-text">HATA Notaking AI</span>
-          </a>
-          <div class="navbar-welcome">
-            <h2>Welcome Rosie!</h2>
-            <p>Hope you are healthy and happy today...</p>
-          </div>
-        </div>
-
-        <div class="navbar-right">
-          <div class="search-box">
-            <i class="bi bi-search"></i>
-            <input type="text" class="search-input" placeholder="Search..." />
-          </div>
-          <button class="trial-btn">Start Your 3-day Free Trial</button>
-          <button class="icon-btn">
-            <i class="bi bi-bell"></i>
-          </button>
-          <div class="profile-wrap">
-            <img
-              src="https://randomuser.me/api/portraits/women/44.jpg"
-              alt="Profile"
-              class="profile-img"
-            />
-            <i
-              class="bi bi-chevron-down text-muted"
-              style="font-size: 0.75rem"
-            ></i>
-          </div>
-        </div>
-      </header>
+      <div th:replace="~{fragments/navbar :: navbar}"></div>
 
       <div class="body-layout">
-        <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
-        <aside class="sidebar">
-          <a href="/dashboard" class="nav-item">
-            <i class="bi bi-house-fill"></i>
-            <span>Home</span>
-          </a>
-          <a href="/all-records" class="nav-item active">
-            <i class="bi bi-grid"></i>
-            <span>All records</span>
-          </a>
-          <hr class="nav-divider" />
-          <a href="#" class="nav-item">
-            <i class="bi bi-folder2"></i>
-            <span>BE09</span>
-          </a>
-          <a href="#" class="nav-item">
-            <i class="bi bi-folder2"></i>
-            <span>Uni CS30001</span>
-          </a>
-          <div class="sidebar-bottom">
-            <a href="#" class="nav-item">
-              <i class="bi bi-gear"></i>
-              <span>Settings</span>
-            </a>
-          </div>
-        </aside>
+        <div th:replace="~{fragments/sidebar :: sidebar(all-records)}"></div>
 
         <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
         <main class="main-content">

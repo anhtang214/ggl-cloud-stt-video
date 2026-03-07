@@ -15,10 +15,15 @@ import org.springframework.stereotype.Service;
 import org.threeten.bp.Duration;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class SpeechService {
+
+    private static final Map<String, String> LANGUAGE_CODES = Map.of(
+            "English", "en-US",
+            "Vietnamese", "vi-VN");
 
     @Value("${gcp.project-id}")
     private String projectId;
@@ -48,9 +53,13 @@ public class SpeechService {
         this.speechSettings = settingsBuilder.build();
     }
 
-    public TranscriptionResult transcribeAndSummarize(String gcsAudioUri) throws Exception {
+    public TranscriptionResult transcribeAndSummarize(String gcsAudioUri, String language, String language2)
+            throws Exception {
         try (SpeechClient speechClient = SpeechClient.create(speechSettings)) {
-            List<SpeechRecognitionResult> results = processFromCloudStorage(speechClient, gcsAudioUri);
+            String languageCode = LANGUAGE_CODES.getOrDefault(language, "en-US");
+            String altLanguageCode = LANGUAGE_CODES.getOrDefault(language2, "en-US");
+            List<SpeechRecognitionResult> results = processFromCloudStorage(speechClient, gcsAudioUri, languageCode,
+                    altLanguageCode);
             StringBuilder fullTranscript = new StringBuilder();
 
             if (results.isEmpty()) {
@@ -71,12 +80,13 @@ public class SpeechService {
         }
     }
 
-    private static List<SpeechRecognitionResult> processFromCloudStorage(SpeechClient speechClient, String gcsUri) throws Exception {
+    private static List<SpeechRecognitionResult> processFromCloudStorage(SpeechClient speechClient, String gcsUri,
+            String languageCode, String altLanguageCode) throws Exception {
         RecognitionConfig config = RecognitionConfig.newBuilder()
                 .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
                 .setAudioChannelCount(2)
-                .setLanguageCode("vi-VN")
-                .addAlternativeLanguageCodes("en-US")
+                .setLanguageCode(languageCode)
+                .addAlternativeLanguageCodes(altLanguageCode)
                 .setEnableAutomaticPunctuation(true)
                 .setEnableWordTimeOffsets(true)
                 .build();
@@ -85,8 +95,8 @@ public class SpeechService {
                 .setUri(gcsUri)
                 .build();
 
-        OperationFuture<LongRunningRecognizeResponse, LongRunningRecognizeMetadata> operation =
-                speechClient.longRunningRecognizeAsync(config, audio);
+        OperationFuture<LongRunningRecognizeResponse, LongRunningRecognizeMetadata> operation = speechClient
+                .longRunningRecognizeAsync(config, audio);
 
         LongRunningRecognizeResponse response = operation.get(2, TimeUnit.HOURS);
 

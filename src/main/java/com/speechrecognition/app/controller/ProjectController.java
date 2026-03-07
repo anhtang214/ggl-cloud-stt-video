@@ -11,7 +11,6 @@ import com.speechrecognition.app.dto.TranscriptionSegmentDTO;
 import com.speechrecognition.app.model.Project;
 import com.speechrecognition.app.model.User;
 import com.speechrecognition.app.repository.ProjectRepository;
-import com.speechrecognition.app.repository.UserRepository;
 import com.speechrecognition.app.service.CloudStorageService;
 import com.speechrecognition.app.service.CustomOAuth2UserService;
 import com.speechrecognition.app.service.ProjectService;
@@ -28,9 +27,6 @@ public class ProjectController {
     
     @Autowired
     private CustomOAuth2UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired 
     private ProjectRepository projectRepository;
@@ -118,7 +114,7 @@ public class ProjectController {
         
         return ResponseEntity.ok(projects);
     }
-    
+
     @GetMapping("/count")
     public ResponseEntity<Long> getProjectCount(
             @AuthenticationPrincipal OAuth2User oAuth2User) {

@@ -25,27 +25,28 @@ public class UploadService {
     @Autowired
     private TranscriptionSegmentService segmentService;
 
-    public void fullUploadPipeline(User user, MultipartFile videoFile, String projectTitle) throws Exception {
+    public void fullUploadPipeline(User user, MultipartFile videoFile, String projectTitle, String language,
+            String language2) throws Exception {
         Project project = projectService.createProject(user, projectTitle);
         VideoResult videoResult = videoProcessingService.processVideo(
-                                                        videoFile,
-                                                        projectTitle,
-                                                        Long.toString(user.getId()),
-                                                        Long.toString(project.getId())
-                                                    );
+                videoFile,
+                projectTitle,
+                Long.toString(user.getId()),
+                Long.toString(project.getId()));
 
-        // Update attributes one by one in case of disruptions, more error handling will be implemented later
+        // Update attributes one by one in case of disruptions, more error handling will
+        // be implemented later
         ProjectUpdate projectUpdate = new ProjectUpdate();
         projectUpdate.gcsUri = videoResult.videoUri;
         projectService.updateProject(project.getId(), projectUpdate);
 
-        TranscriptionResult transcriptionResult = speechService.transcribeAndSummarize(videoResult.audioUri);
+        TranscriptionResult transcriptionResult = speechService.transcribeAndSummarize(videoResult.audioUri, language, language2);
 
         projectUpdate.summary = transcriptionResult.summary;
         projectService.updateProject(project.getId(), projectUpdate);
 
         segmentService.saveSegments(project, transcriptionResult.transcriptions);
-        
+
         projectUpdate.status = ProjectStatus.COMPLETED;
         projectService.updateProject(project.getId(), projectUpdate);
     }

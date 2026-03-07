@@ -1,0 +1,36 @@
+<header class="top-navbar" th:fragment="navbar">
+  <div class="navbar-left">
+    <button class="hamburger-btn">
+      <i class="bi bi-list"></i>
+    </button>
+    <a href="#" class="navbar-logo">
+      <div class="logo-icon">
+        <i class="bi bi-soundwave"></i>
+      </div>
+      <span class="logo-text">HATA Notaking AI</span>
+    </a>
+    <div class="navbar-welcome">
+      <h2>Welcome <span th:text="${currentUser.fullName.split(' ')[0]}"></span>!</h2>
+      <p>Hope you are healthy and happy today...</p>
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" class="search-input" placeholder="Search..." />
+    </div>
+    <button class="trial-btn">Start Your 3-day Free Trial</button>
+    <button class="icon-btn">
+      <i class="bi bi-bell"></i>
+    </button>
+    <div class="profile-wrap">
+      <img
+        th:src="${currentUser.profilePictureUrl}"
+        alt="Profile"
+        class="profile-img"
+      />
+      <i class="bi bi-chevron-down text-muted" style="font-size: 0.75rem"></i>
+    </div>
+  </div>
+</header>

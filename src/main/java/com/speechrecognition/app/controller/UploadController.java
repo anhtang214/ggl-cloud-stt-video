@@ -31,10 +31,12 @@ public class UploadController {
     public String handleUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("title") String title,
+            @RequestParam("language") String language,
+            @RequestParam(value = "language2", required = false) String language2,
             @AuthenticationPrincipal OAuth2User oAuth2User) throws Exception {
 
         User user = userService.getByOAuth2User(oAuth2User);
-        uploadService.fullUploadPipeline(user, file, title);
+        uploadService.fullUploadPipeline(user, file, title, language, language2);
 
         return "redirect:/dashboard";
     }

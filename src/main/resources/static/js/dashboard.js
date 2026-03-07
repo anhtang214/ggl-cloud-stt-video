@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 + '<td>' + (project.createdAt || "\u2014") + '</td>'
                 + '<td>' + escapeHtml(project.folderName || "\u2014") + '</td>'
                 + '<td>' + (project.lastChanged || "\u2014") + '</td>'
-                + '<td>' + (project.formattedDuration || "\u2014") + '</td>'
+                + '<td>' + (project.duration || "\u2014") + '</td>'
                 + '</tr>';
         }).join("");
 

@@ -55,8 +55,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setGoogleId(googleId);
             newUser.setProfilePictureUrl(picture);
             newUser.setAuthProvider(AuthProvider.GOOGLE);
-            
+
             userRepository.save(newUser);
-		}
+		} else {
+            existingUser.setProfilePictureUrl(picture);
+            userRepository.save(existingUser);
+        }
 	}
 }
