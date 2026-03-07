@@ -4,6 +4,9 @@ A cloud-native web application that automatically transcribes lecture and meetin
 
 Users upload an MP4 video, and the application extracts the audio, transcribes speech using Google Cloud Speech-to-Text, then generates a concise bullet-point summary using Gemini via Vertex AI — all within a single authenticated session.
 
+## Demo
+[Demo Video](https://drive.google.com/file/d/1_v7mJAoygCdlQ617TNq7JWj-g3zQc_bU/view?usp=sharing)]
+
 ## Team
 
 | Name |
@@ -43,7 +46,7 @@ UploadController
             `-- Persist result --> MySQL (JPA/Hibernate)
 ```
 
-Credentials are loaded once at startup via a `@Configuration` bean (`GcpConfig`) and injected into all services — no hardcoded secrets anywhere in the codebase.
+Credentials are loaded once at startup via a `@Configuration` bean (`GcpConfig`) and injected into all services, no hardcoded secrets anywhere in the codebase.
 
 ## Tech Stack
 
@@ -61,7 +64,7 @@ Credentials are loaded once at startup via a `@Configuration` bean (`GcpConfig`)
 
 ## Project Status
 
-Currently in active development. Core pipeline (upload → transcription → summary) is being integrated. 
+Currently in active development. Core pipeline (upload → transcription → summary) has been integrated. 
 
 ## Local Setup
 
