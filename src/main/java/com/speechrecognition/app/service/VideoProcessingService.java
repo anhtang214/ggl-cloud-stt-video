@@ -27,9 +27,12 @@ public class VideoProcessingService {
 
         try {
             videoFile.transferTo(tempVideo);
+            long durationInMs = new MultimediaObject(tempVideo).getInfo().getDuration();
+            Integer durationSeconds = (int) Math.ceil(durationInMs / 1000.0);
+
             tempAudio = extractWavAudio(tempVideo);
             String audioUri = cloudStorageService.uploadAudioFile(tempAudio, userId, projectId);
-            return new VideoResult(videoUri, audioUri, title);
+            return new VideoResult(videoUri, audioUri, title, durationSeconds);
         } finally {
             tempVideo.delete();
             if (tempAudio != null) tempAudio.delete();
@@ -59,11 +62,13 @@ public class VideoProcessingService {
         public String videoUri;
         public String audioUri;
         public String title;
+        public Integer durationSeconds;
 
-        public VideoResult(String videoUri, String audioUri, String title) {
+        public VideoResult(String videoUri, String audioUri, String title, Integer durationSeconds) {
             this.videoUri = videoUri;
             this.audioUri = audioUri;
             this.title = title;
+            this.durationSeconds = durationSeconds;
         }
     }
 }

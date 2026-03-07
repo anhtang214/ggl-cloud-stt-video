@@ -38,9 +38,11 @@ public class UploadService {
         // be implemented later
         ProjectUpdate projectUpdate = new ProjectUpdate();
         projectUpdate.gcsUri = videoResult.videoUri;
+        projectUpdate.durationSeconds = videoResult.durationSeconds;
         projectService.updateProject(project.getId(), projectUpdate);
 
-        TranscriptionResult transcriptionResult = speechService.transcribeAndSummarize(videoResult.audioUri, language, language2);
+        TranscriptionResult transcriptionResult = speechService.transcribeAndSummarize(videoResult.audioUri, language,
+                language2);
 
         projectUpdate.summary = transcriptionResult.summary;
         projectService.updateProject(project.getId(), projectUpdate);

@@ -57,7 +57,8 @@ public class SpeechService {
             throws Exception {
         try (SpeechClient speechClient = SpeechClient.create(speechSettings)) {
             String languageCode = LANGUAGE_CODES.getOrDefault(language, "en-US");
-            String altLanguageCode = LANGUAGE_CODES.getOrDefault(language2, "en-US");
+            String altLanguageCode = (language2 != null && !language2.isBlank())
+                    ? LANGUAGE_CODES.get(language2) : null;
             List<SpeechRecognitionResult> results = processFromCloudStorage(speechClient, gcsAudioUri, languageCode,
                     altLanguageCode);
             StringBuilder fullTranscript = new StringBuilder();
@@ -82,14 +83,18 @@ public class SpeechService {
 
     private static List<SpeechRecognitionResult> processFromCloudStorage(SpeechClient speechClient, String gcsUri,
             String languageCode, String altLanguageCode) throws Exception {
-        RecognitionConfig config = RecognitionConfig.newBuilder()
+        RecognitionConfig.Builder configBuilder = RecognitionConfig.newBuilder()
                 .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
                 .setAudioChannelCount(2)
                 .setLanguageCode(languageCode)
-                .addAlternativeLanguageCodes(altLanguageCode)
                 .setEnableAutomaticPunctuation(true)
-                .setEnableWordTimeOffsets(true)
-                .build();
+                .setEnableWordTimeOffsets(true);
+
+        if (altLanguageCode != null) {
+            configBuilder.addAlternativeLanguageCodes(altLanguageCode);
+        }
+
+        RecognitionConfig config = configBuilder.build();
 
         RecognitionAudio audio = RecognitionAudio.newBuilder()
                 .setUri(gcsUri)
