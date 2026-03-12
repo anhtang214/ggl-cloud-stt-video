@@ -72,4 +72,8 @@ public class ProjectService {
 	public Long getUserProjectCount(Long userId) {
         return projectRepository.countByUserId(userId);
     }
+
+	public Project getProjectById(Long id) {
+		return projectRepository.findById(id).orElse(null);
+	}
 }

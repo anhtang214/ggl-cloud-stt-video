@@ -10,7 +10,6 @@ import com.speechrecognition.app.dto.ProjectDetailDTO;
 import com.speechrecognition.app.dto.TranscriptionSegmentDTO;
 import com.speechrecognition.app.model.Project;
 import com.speechrecognition.app.model.User;
-import com.speechrecognition.app.repository.ProjectRepository;
 import com.speechrecognition.app.service.CloudStorageService;
 import com.speechrecognition.app.service.CustomOAuth2UserService;
 import com.speechrecognition.app.service.ProjectService;
@@ -27,9 +26,6 @@ public class ProjectController {
     
     @Autowired
     private CustomOAuth2UserService userService;
-
-    @Autowired 
-    private ProjectRepository projectRepository;
 
     @Autowired
     private TranscriptionSegmentService segmentService;
@@ -66,7 +62,7 @@ public class ProjectController {
         }
 
         // 2. Find the project
-        Project project = projectRepository.findById(id).orElse(null);
+         Project project = projectService.getProjectById(id);
         if (project == null) {
             return ResponseEntity.notFound().build();
         }
